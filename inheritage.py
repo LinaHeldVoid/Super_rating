@@ -14,14 +14,17 @@ class Student:                                      # класс студент�
             for k in i:
                summ += k
                n += 1
-        average = summ/n
+        self.average = summ/n
         progress = ", ".join(self.courses_in_progress)          # изучаемые курсы
         finished = ", ".join(self.finished_courses)             # завершённые курсы
         return f"Имя: {self.name} \n" \
                f"Фамилия: {self.surname} \n" \
-               f"Средняя оценка за домашние задания: {average} \n" \
+               f"Средняя оценка за домашние задания: {self.average} \n" \
                f"Курсы в процессе изучения: {progress} \n" \
                f"Завершённык курсы: {finished} \n"
+
+    def __gt__(self, other):
+        return self.__str__() > other.__str__()
 
     def course_controle(self):
         summ = 0  # средний балл
@@ -30,8 +33,8 @@ class Student:                                      # класс студент�
             for k in i:
                 summ += k
                 n += 1
-        average = summ / n  # средняя оценка за лекции
-        return (average)
+        self.average = summ / n  # средняя оценка за лекции
+        return (self.average)
 
                                                      # студенты оценивают лекторов
 
@@ -68,6 +71,9 @@ class Lecturer(Mentor):                              # подкласс лект
         return f"Имя: {self.name} \n" \
                f"Фамилия: {self.surname} \n" \
                f"Средняя оценка за лекции: {average} \n"
+
+    def __gt__(self, other):
+        return self.__str__() > other.__str__()
 
     def mentor_controle(self):
         summ = 0                                   # средний балл по лекциям
@@ -218,6 +224,21 @@ print('\n\n')
 print('Преподаватели-практики: ' + '\n')
 print(cool_mentor)
 print((de_mentor))
+
+# сравнение лекторов и студентов по среднему баллу
+best=0
+for i in student_list:
+    result = i.__gt__(best)
+    if result == True:
+        best = i
+print(f'Лучший средний балл у студента {best.name} {best.surname}')
+
+best=0
+for i in lecturer_list:
+    result = i.__gt__(best)
+    if result == True:
+        best = i
+print(f'Лучший средний балл у профессора {best.name} {best.surname}')
 
 # задание 4
 course_control = input('Для какого курса считать средний балл студентов? ')
